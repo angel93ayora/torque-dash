@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const config = require('../config/config');
 const db = {};
 
-const sequelize = new Sequelize(config.db.data);
+const sequelize = new Sequelize(config.db.connectionParam);
 
 // Loop through all files in models folder and add them to db object
 fs

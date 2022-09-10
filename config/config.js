@@ -1,10 +1,11 @@
 let config = {
     port: process.env.PORT || 8081,
     db: {
-        data: {
-            dialect: 'sqlite',
-            storage: 'db.sqlite'
-        },
+        connectionParam: process.env.DATABASE_URL || 'sqlengine://user:pass@host:port/dbname',
+        // connectionParam: {
+        //     dialect: 'sqlite',
+        //     storage: 'db.sqlite'
+        // },
         options: {
             logging: false
         }
