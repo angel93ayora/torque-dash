@@ -24,8 +24,8 @@ class UploadController {
             if (!user) return res.status(403).send('Invalid user account.');
 
             // Check if user set any forward URLs, resend request
-            let urls = user.forwardUrls;
-            if(urls) {
+            let urls = JSON.parse(user.forwardUrls);
+            if (urls) {
                 urls.forEach(url => {
                     try{
                         request({

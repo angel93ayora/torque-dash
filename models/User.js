@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             unique: true
         },
         forwardUrls: {
-            type: DataTypes.ARRAY(DataTypes.STRING)
+            type: DataTypes.JSON
         }
     }, {
         hooks: {

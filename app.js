@@ -44,22 +44,13 @@ app.use('/api', require('./routes/api.js'));
 app.use('*', require('./routes/404.js'));
 
 // Connect to database and sync models
-sequelize.sync(
-    // {force:true}
-    )
+sequelize.sync()
     .then(() => {
         console.log('Connection to database successfully established');  
         
-        // User.create({
-        //     email: 'test@contoso.com',
-        //     password : 'heslo'
-        // });
-
         // Start server
         app.listen(config.port, () => console.log(`Listening on port ${config.port}`));
 
-    }).catch((err) => {
+    }, (err) => {
         console.log('Error connecting to the database:', err.message);
-});
-
-
+    });

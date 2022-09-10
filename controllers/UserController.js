@@ -45,7 +45,7 @@ class UserController {
             let user = await User.findOne({
                 where: { id: req.user.id }
             });
-            let forwardUrls = user.forwardUrls;
+            let forwardUrls = JSON.parse(user.forwardUrls);
             console.log(forwardUrls);
             if(!forwardUrls) return res.send([]);
             res.send(forwardUrls);
@@ -68,7 +68,7 @@ class UserController {
                 return res.sendStatus(200);
             }
             await user.update({
-                forwardUrls: urls
+                forwardUrls: JSON.stringify(urls)
             });
             res.sendStatus(200);
         }

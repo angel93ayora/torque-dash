@@ -1,7 +1,10 @@
 let config = {
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 8081,
     db: {
-        uri: process.env.DATABASE_URL || 'postgres://postgres:heslo@localhost:5432/torquedash',
+        data: {
+            dialect: 'sqlite',
+            storage: 'db.sqlite'
+        },
         options: {
             logging: false
         }

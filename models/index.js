@@ -4,10 +4,7 @@ const Sequelize = require('sequelize');
 const config = require('../config/config');
 const db = {};
 
-const sequelize = new Sequelize(
-    config.db.uri,
-    config.db.options,
-);
+const sequelize = new Sequelize(config.db.data);
 
 // Loop through all files in models folder and add them to db object
 fs
