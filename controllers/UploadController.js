@@ -12,6 +12,9 @@ class UploadController {
             let lon = req.query.kff1005;
             let lat = req.query.kff1006;
 
+            if (!session)
+                throw new Error("No session");
+
             // check for duplicate gps values (when selecting always send gps values in settings + choosing gps pids in pid list)
             if (Array.isArray(lon)) lon = lon[0];
             if (Array.isArray(lat)) lat = lat[0];
@@ -24,13 +27,13 @@ class UploadController {
             if (!user) return res.status(403).send('Invalid user account.');
 
             // Check if user set any forward URLs, resend request
-            let urls = JSON.parse(user.forwardUrls);
+            let urls = await user.getForwardUrls();
             if (urls) {
                 urls.forEach(url => {
                     try{
                         request({
                             method: 'GET',
-                            url: url,
+                            url: url.value,
                             qs: req.query,
                             headers: {}
                         });

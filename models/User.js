@@ -16,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         shareId: {
             type: DataTypes.STRING,
             unique: true
-        },
-        forwardUrls: {
-            type: DataTypes.JSON
         }
     }, {
         hooks: {
@@ -31,6 +28,12 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Session, {
             as: 'Sessions',
             foreignKey: 'userId',
+            onDelete: 'cascade'
+        });
+
+        User.hasMany(models.ForwardUrl, {
+            as: 'forwardUrls',
+            foreignKey: "userId",
             onDelete: 'cascade'
         });
     };

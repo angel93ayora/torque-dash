@@ -1,4 +1,5 @@
 const User = require('../models').User;
+const ForwardUrl = require('../models').ForwardUrl;
 const passport = require('passport');
 const shortid = require('shortid');
 
@@ -45,9 +46,12 @@ class UserController {
             let user = await User.findOne({
                 where: { id: req.user.id }
             });
-            let forwardUrls = JSON.parse(user.forwardUrls);
-            console.log(forwardUrls);
-            if(!forwardUrls) return res.send([]);
+
+            let forwardUrlsObjects = await user.getForwardUrls();
+            let forwardUrls = [];
+            for (let obj of forwardUrlsObjects)
+                forwardUrls.push(obj.value);
+
             res.send(forwardUrls);
         }
         catch(err) {
@@ -61,15 +65,22 @@ class UserController {
             let user = await User.findOne({
                 where: { id: req.user.id }
             });
-            if(!urls) {
-                await user.update({
-                    forwardUrls: null
-                });
+
+            await ForwardUrl.destroy({where: {userId: user.id}});
+            
+            if (!urls)
                 return res.sendStatus(200);
-            }
-            await user.update({
-                forwardUrls: JSON.stringify(urls)
-            });
+            
+            
+            if (urls.constructor.name != "Array")
+                return res.sendStatus(500);
+            
+            for (let k in urls)
+                urls[k] = {value: "" + urls[k]};
+
+            let fwInstances = await ForwardUrl.bulkCreate(urls);
+            user.setForwardUrls(fwInstances);
+
             res.sendStatus(200);
         }
         catch(err) {
