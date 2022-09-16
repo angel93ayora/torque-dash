@@ -90,6 +90,7 @@ class SessionController {
             res.sendStatus(500);
         }
     }
+    
     static async getAllShared(req, res) {
         try {
             // Check if user exists

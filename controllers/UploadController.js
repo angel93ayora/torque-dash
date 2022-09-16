@@ -73,7 +73,7 @@ class UploadController {
                 timestamp: timestamp,
                 lon: lon,
                 lat: lat,
-                values: values
+                values: JSON.stringify(values)
             });
             if (log) res.status(200).send('OK!');
         } catch (err) {

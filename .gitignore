@@ -2,3 +2,4 @@ node_modules/
 .eslintrc.js
 .vscode/
 db.sqlite
+/config/config.js

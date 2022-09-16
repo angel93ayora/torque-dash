@@ -14,10 +14,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.FLOAT
         },
         values: {
-            type: DataTypes.JSONB,
+            type: DataTypes.TEXT,
+            // Returns an object, stored as stringified json
             // convert keys to names when pulling out of db
             get: function()  {
-                var values = this.getDataValue('values'); 
+                var values = this.getDataValue('values');
+                values = JSON.parse(values);
                 values = util.renameKeys(pidNames, values);
                 return values;
               },
